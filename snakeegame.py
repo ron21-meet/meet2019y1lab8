@@ -11,13 +11,16 @@ turtle.penup()
 
 SQUARE_SIZE = 20
 START_LENGTH = 5
-TIME_STEP = 100
+TIME_STEP = 40
 
 #Initialize lists
 pos_list = []
 stamp_list = []
 food_pos = []
 food_stamps = []
+fod_pos = []
+fod_stamp = []
+block_pos = [(140,100), (-140,-100),(140,-100),(-140,100)]
 
 #Set up positions (x,y) of boxes that make up the snake
 snake = turtle.clone()
@@ -65,6 +68,7 @@ RIGHT_EDGE = 400
 LEFT_EDGE = -400
 
 
+
 def up():
     snake.direction="Up" #Change direction to up
     print("You pressed the up key!")
@@ -78,16 +82,39 @@ turtle.onkeypress(up, "Up") # Create listener for up key
 ####WRITE YOUR CODE HERE!!
 
 turtle.listen()
-turtle.register_shape("trash.gif")
+turtle.register_shape("apple.gif")
+turtle.register_shape("rainbow.gif")
+turtle.register_shape("blue.gif")
+turtle.register_shape("red.gif")
+block = turtle.clone()
+block.shape("blue.gif")
+fod = turtle.clone()
+fod.shape("rainbow.gif")
 food = turtle.clone()
-food.shape("trash.gif")
+food.shape("apple.gif")
 food_pos = [(100,100), (-100,100), (-100,-100), (100,-100)]
 food_stamps = []
 for i in food_pos:
     food.goto(i)
     ron = food.stamp()
     food_stamps.append(ron)
-    
+block.goto
+def rainbow():
+    fod.goto(0,0)
+    fod_stamp.append(fod.stamp())
+    yooo = fod.pos()
+    fod_pos.append(yooo)
+    turtle.ontimer(rainbow,25000)
+rainbow()  
+
+block.goto(140,100)
+block.stamp()
+block.goto(-140,-100)
+block.stamp()
+block.goto(-140,100)
+block.stamp()
+block.goto(140,-100)
+block.stamp()
 def make_food():
     #The screen positions go from -SIZE/2 to +SIZE/2
     #But we need to make food pieces only appear on game squares
@@ -115,7 +142,6 @@ def move_snake():
     my_pos = snake.pos()
     x_pos = my_pos[0]
     y_pos = my_pos[1]
-    
     #If snake.direction is up, then we want the snake to change
     #it’s y position by SQUARE_SIZE
     if snake.direction == "Up":
@@ -167,12 +193,22 @@ def move_snake():
     elif snake.pos() in pos_list[0:-1]:
         print("you suicide!")
         quit()
+    if snake.pos() in fod_pos:
+        fod_index = fod_pos.index(snake.pos())
+        fod.clearstamp(fod_stamp[fod_index])
+        fod_pos.pop(fod_index)
+        fod_stamp.pop(fod_index)
+        new_stamp()
+        new_stamp()
+        new_stamp()
+        print("yoooooo")
     
-    
-          
-    turtle.ontimer(move_snake,TIME_STEP)
     if len(food_stamps) <= 6 :
-        make_food()
+        make_food()  
+    if snake.pos() in block_pos:
+        print("you died")
+        quit()
+    turtle.ontimer(move_snake,TIME_STEP)
 
 move_snake()
 

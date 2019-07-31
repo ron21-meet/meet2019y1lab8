@@ -11,7 +11,7 @@ turtle.penup()
 
 SQUARE_SIZE = 20
 START_LENGTH = 5
-TIME_STEP = 40
+TIME_STEP = 50
 
 #Initialize lists
 pos_list = []
@@ -104,7 +104,6 @@ def rainbow():
     fod_stamp.append(fod.stamp())
     yooo = fod.pos()
     fod_pos.append(yooo)
-    turtle.ontimer(rainbow,25000)
 rainbow()  
 
 block.goto(140,100)
@@ -201,7 +200,11 @@ def move_snake():
         new_stamp()
         new_stamp()
         new_stamp()
+        global TIME_STEP
+        TIME_STEP -= 10
+        turtle.ontimer(rainbow,10000)
         print("yoooooo")
+        
     
     if len(food_stamps) <= 6 :
         make_food()  

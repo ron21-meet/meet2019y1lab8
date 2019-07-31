@@ -2,7 +2,8 @@ import turtle
 import random #We'll need this later in the lab
 
 turtle.tracer(1,0) #This helps the turtle move more smoothly
-
+turtle.bgcolor("black")
+turtle.color("orange")
 SIZE_X=800
 SIZE_Y=500
 turtle.setup(SIZE_X, SIZE_Y) #Curious? It's the turtle window  
@@ -11,7 +12,7 @@ turtle.penup()
 
 SQUARE_SIZE = 20
 START_LENGTH = 5
-TIME_STEP = 50
+TIME_STEP = 100
 
 #Initialize lists
 pos_list = []
@@ -126,10 +127,11 @@ def make_food():
     #Pick a position that is a random multiple of SQUARE_SIZE
     food_x = random.randint(min_x,max_x)*SQUARE_SIZE
     food_y = random.randint(min_y,max_y)*SQUARE_SIZE
-    food.goto(food_x, food_y)
-    food_pos.append(food.pos())
-    a = food.stamp()
-    food_stamps.append(a)
+    if (food_x, food_y) not in block_pos:
+        food.goto(food_x, food_y)
+        food_pos.append(food.pos())
+        a = food.stamp()
+        food_stamps.append(a)
     
 
         ##1.WRITE YOUR CODE HERE: Make the food turtle go to the randomly-generated
@@ -200,9 +202,11 @@ def move_snake():
         new_stamp()
         new_stamp()
         new_stamp()
+        new_stamp()
+        new_stamp()
         global TIME_STEP
         TIME_STEP -= 10
-        turtle.ontimer(rainbow,10000)
+        turtle.ontimer(rainbow,25000)
         print("yoooooo")
         
     
@@ -212,12 +216,9 @@ def move_snake():
         print("you died")
         quit()
     turtle.ontimer(move_snake,TIME_STEP)
-
 move_snake()
 
-
-
-    
+   
 def right():
     snake.direction="right"
     print("you pressed the right key")

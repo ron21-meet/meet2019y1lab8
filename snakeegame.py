@@ -1,8 +1,10 @@
 import turtle
 import random #We'll need this later in the lab
-
+ko = turtle.Turtle()
+ko.hideturtle()
+ko.goto(-350,150)
 turtle.tracer(1,0) #This helps the turtle move more smoothly
-turtle.bgcolor("black")
+turtle.bgcolor("white")
 turtle.color("orange")
 SIZE_X=800
 SIZE_Y=500
@@ -13,7 +15,7 @@ turtle.penup()
 SQUARE_SIZE = 20
 START_LENGTH = 5
 TIME_STEP = 100
-
+score = 0
 #Initialize lists
 pos_list = []
 stamp_list = []
@@ -140,6 +142,7 @@ def make_food():
         ##3.WRITE YOUR CODE HERE: Add the food turtle's stamp to the food stamps list
 
 def move_snake():
+    global score
     my_pos = snake.pos()
     x_pos = my_pos[0]
     y_pos = my_pos[1]
@@ -191,6 +194,7 @@ def move_snake():
         food_stamps.pop(food_index) #Remove eaten food stamp
         print("You have eaten the food!")
         new_stamp()
+        score += 100
     elif snake.pos() in pos_list[0:-1]:
         print("you suicide!")
         quit()
@@ -208,7 +212,9 @@ def move_snake():
         TIME_STEP -= 10
         turtle.ontimer(rainbow,25000)
         print("yoooooo")
-        
+        score += 500
+    ko.clear()
+    ko.write(score,font=("ariel",50,"bold"))
     
     if len(food_stamps) <= 6 :
         make_food()  
